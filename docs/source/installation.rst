@@ -1,0 +1,41 @@
+Installing OnClass
+=========================
+OnClass can be substantially accelerated by using GPU (tensorflow). However, there is only required when you want to train your own model.
+
+
+
+PyPI
+~~~~~~~~~
+OnClass is available through the `Python Package Index`_ and thus can be installed
+using pip. Please use Python3.6. To install OnClass using pip, run:
+
+1) Only use CPU
+
+
+.. code:: bash
+
+	pip install OnClass
+	pip install tensorflow-gpu==1.14
+
+.. _Python Package Index: https://pypi.python.org/pypi
+
+2) Use GPU
+
+
+.. code:: bash
+
+	pip install OnClass
+	pip install tensorflow==1.14
+
+.. _Python Package Index: https://pypi.python.org/pypi
+
+
+
+Development Version
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
+The lastest verion of OnClass is on `GitHub
+<https://github.com/wangshenguiuc/OnClass/>`__
+
+.. code:: bash
+
+	git clone https://github.com/wangshenguiuc/OnClass.git
