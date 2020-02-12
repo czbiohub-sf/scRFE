@@ -1,0 +1,11 @@
+Metadata-Version: 1.0
+Name: scRFE
+Version: 0.1
+Summary: single-cell identity definition using random forest modelling and recursive feature elimination
+Home-page: https://github.com/wangshenguiuc/OnClass
+Author: Madeline Park
+Author-email: madeline.park@czbiohub.org
+License: MIT Licence
+Description: single-cell identity definition using random forest modelling and recursive feature elimination
+Keywords: pip,single cell,OnClass
+Platform: any
