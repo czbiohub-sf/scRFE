@@ -28,6 +28,7 @@ from sklearn.feature_selection import RFECV
 # In[40]:
 
 
+# read in data 
 adata = read_h5ad('/Users/madelinepark/Downloads/Limb_Muscle_facs.h5ad')
 tiss = adata
 
@@ -35,6 +36,7 @@ tiss = adata
 # In[72]:
 
 
+# split data for training
 def loc_split(tiss, feature='age'):
     tiss.obs['feature_type_of_interest'] = 'rest'
     results_feature_cv = pd.DataFrame()
@@ -50,6 +52,7 @@ def loc_split(tiss, feature='age'):
 # In[73]:
 
 
+# train
 def train(X, y, test_size, random_state):
     print('training...')
     feat_labels = loc_split(tiss=tiss, feature='age')[3] 
@@ -65,6 +68,7 @@ def train(X, y, test_size, random_state):
 # In[100]:
 
 
+# result write
 def result_write (c, feature_selected, tiss, feature='age',test_size=0.05, random_state=0): 
     results_feature_cv = pd.DataFrame()
     print('result writing...')
@@ -91,6 +95,7 @@ def result_write (c, feature_selected, tiss, feature='age',test_size=0.05, rando
 # In[101]:
 
 
+# combined functions
 def scRFE (tiss=tiss, X=tiss.X, feature='age', n_estimators=1000, random_state=0, n_jobs=-1, oob_score=True, test_size = 0.05, step=0.2, cv=5) :
     for c in list(set(tiss.obs[feature])): 
         print(c)
@@ -108,9 +113,10 @@ def scRFE (tiss=tiss, X=tiss.X, feature='age', n_estimators=1000, random_state=0
 #         not sorted
 
 
-# In[102]:
+# In[ ]:
 
 
+# run function
 scRFE(tiss=tiss, feature='age', n_estimators=1000, random_state=0, n_jobs=-1, oob_score=True, test_size = 0.05, step=0.2, cv=5)
 
 
