@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name = "scRFE",
-    version = "0.3",
+    version = "0.4",
     keywords = ("pip", "single cell", "scRFE"),
     description = "Single-cell identity definition using random forest modelling and recursive feature elimination",
     long_description = "Single-cell identity definition using random forest modelling and recursive feature elimination",
