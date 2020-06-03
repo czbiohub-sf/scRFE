@@ -1,11 +1,11 @@
 Metadata-Version: 1.0
 Name: scRFE
-Version: 0.3
+Version: 0.5
 Summary: Single-cell identity definition using random forest modelling and recursive feature elimination
 Home-page: https://github.com/czbiohub/scRFE
 Author: Madeline Park
 Author-email: madeline.park@czbiohub.org
 License: MIT Licence
-Description: Single-cell identity definition using random forest modelling and recursive feature elimination
+Description: Single-cell identity one vs all classification using random forest modelling and recursive feature elimination
 Keywords: pip,single cell,scRFE
 Platform: any
