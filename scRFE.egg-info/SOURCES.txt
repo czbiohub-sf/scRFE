@@ -1,6 +1,7 @@
 README.md
 setup.py
 scRFE/__init__.py
+scRFE/scRFE.py
 scRFE/utils.py
 scRFE.egg-info/PKG-INFO
 scRFE.egg-info/SOURCES.txt
