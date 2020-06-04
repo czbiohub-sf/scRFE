@@ -34,13 +34,6 @@ import seaborn as sns
 import matplotlib.pyplot as plt
 
 
-# In[118]:
-
-
-# read in anndata file 
-adata = read_h5ad('/Users/madelinepark/Downloads/Kidney_facs.h5ad')
-
-
 # In[119]:
 
 
