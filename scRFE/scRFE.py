@@ -230,12 +230,3 @@ def scRFE(dataMatrix, classOfInterest, nEstimators = 5000, randomState = 0,
         print(results_df.shape)
     return results_df
 
-
-# # Run scRFE split by celltype
-
-# In[125]:
-
-
-kidney5000scRFECelltypeReIndex = scRFE (dataMatrix = adata, 
-                                        classOfInterest = 'cell_ontology_class')
-
