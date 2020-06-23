@@ -1,6 +1,6 @@
 Metadata-Version: 1.0
 Name: scRFE
-Version: 1.1
+Version: 1.2
 Summary: Single-cell identity definition using random forest modelling and recursive feature elimination
 Home-page: https://github.com/czbiohub/scRFE
 Author: Madeline Park
