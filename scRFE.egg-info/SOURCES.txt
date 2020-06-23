@@ -8,3 +8,10 @@ scRFE.egg-info/SOURCES.txt
 scRFE.egg-info/dependency_links.txt
 scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
+src/BilinearNN.py
+src/CellTypeAnnotation.py
+src/OnClass.py
+src/OnClassPred.py
+src/__init__.py
+src/scRFE.py
+src/utils.py
