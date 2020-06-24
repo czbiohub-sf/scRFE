@@ -22,7 +22,7 @@ copyright = '2020, Madeline Park'
 author = 'Madeline Park'
 
 # The full version, including alpha/beta/rc tags
-release = 'scRFE0.3'
+release = 'scRFE'
 
 
 # -- General configuration ---------------------------------------------------
