@@ -251,14 +251,14 @@ def scRFE(adata, classOfInterest, nEstimators = 5000, randomState = 0,
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
 
-    print("Original dataset ", dataMatrix.shape)
+    # print("Original dataset ", dataMatrix.shape)
     dataMatrix = filterNormalize (dataMatrix, classOfInterest)
-    print("Filtered dataset ",dataMatrix.shape)
-    print(pd.DataFrame(dataMatrix.obs.groupby([classOfInterest])[classOfInterest].count()))
+    # print("Filtered dataset ",dataMatrix.shape)
+    # print(pd.DataFrame(dataMatrix.obs.groupby([classOfInterest])[classOfInterest].count()))
 
     results_df = pd.DataFrame()
     for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
-        print(labelOfInterest)
+        # print(labelOfInterest)
         dataMatrix_labelOfInterest = dataMatrix.copy()
         feature_selected, feature_importance = makeOneForest(dataMatrix_labelOfInterest,
                                                              classOfInterest,
