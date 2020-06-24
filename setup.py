@@ -5,7 +5,6 @@ setup(
   version = '1.4.1',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",
-  license = "MIT Licence",
   author = 'Madeline Park',                   # Type in your name
   author_email = 'madeline.park@czbiohub.org',      # Type in your E-Mail
   url = "https://github.com/czbiohub/scRFE",   # Provide either the link to your github or to your website
