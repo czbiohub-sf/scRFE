@@ -1,4 +1,21 @@
+import numpy as np
+import pandas as pd
+import scanpy as sc
+import random
+from anndata import read_h5ad
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectFromModel
+from sklearn.metrics import accuracy_score
+from sklearn.feature_selection import RFE
+from sklearn.feature_selection import RFECV
+import seaborn as sns
+import matplotlib.pyplot as plt
+import scanpy.external as sce
+import logging as logg
+
 from setuptools import setup, find_packages
+
 setup(
   name = 'scRFE',         # How you named your package folder (MyLib)
   packages = ['scRFE'],   # Chose the same as "name"
@@ -11,7 +28,7 @@ setup(
   download_url = 'https://github.com/czbiohub/scRFE/archive/1.4.1.tar.gz',    # I explain this later on
   keywords = ("pip", "single cell", "scRFE"),   # Keywords that define your package best
 
-  packages = find_packages(),
+  # packages = find_packages(),
   include_package_data = True,
   platforms = "any",
   install_requires=[
