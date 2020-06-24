@@ -9,7 +9,7 @@ setup(
   author = 'Madeline Park',                   # Type in your name
   author_email = 'madeline.park@czbiohub.org',      # Type in your E-Mail
   url = "https://github.com/czbiohub/scRFE",   # Provide either the link to your github or to your website
-  download_url = 'https://github.com/user/reponame/archive/v_01.tar.gz',    # I explain this later on
+  download_url = 'https://github.com/czbiohub/scRFE/archive/1.4.1.tar.gz',    # I explain this later on
   keywords = ("pip", "single cell", "scRFE"),   # Keywords that define your package best
 
   packages = find_packages(),
