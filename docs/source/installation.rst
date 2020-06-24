@@ -4,7 +4,7 @@ Installing scRFE
 PyPI
 ~~~~~~~~~
 scRFE is available through the `Python Package Index`_ and thus can be installed
-using pip. Please use Python3.6. To install scRFE using pip, run:
+using pip. To install scRFE using pip, run:
 
 
 .. code:: bash
