@@ -3,7 +3,13 @@
 
 # # scRFE
 
-# In[3]:
+# In[154]:
+
+
+# madeline editting 06/22
+
+
+# In[186]:
 
 
 # Imports 
@@ -24,7 +30,20 @@ import scanpy.external as sce
 import logging as logg
 
 
-# In[84]:
+# In[187]:
+
+
+# adataLiver = read_h5ad('/Users/madelinepark/Downloads/Liver_droplet.h5ad')
+
+
+# In[188]:
+
+
+# mouse_tfs = pd.read_csv("/Users/madelinepark/Downloads/GO_term_summary_20171110_222852.csv")
+# mouse_tfs.head()
+
+
+# In[191]:
 
 
 def columnToString (dataMatrix):
@@ -34,37 +53,38 @@ def columnToString (dataMatrix):
     return dataMatrix
 
 
-# In[101]:
+# In[192]:
 
 
 def filterNormalize (dataMatrix, classOfInterest):
     np.random.seed(644685)
-#     sc.pp.filter_cells(dataMatrix, min_genes=0)
-#     sc.pp.filter_genes(dataMatrix, min_cells=0)
+    sc.pp.filter_cells(dataMatrix, min_genes=0)
+    sc.pp.filter_genes(dataMatrix, min_cells=0)
     dataMatrix = dataMatrix[dataMatrix.obs[classOfInterest]!='nan']
     dataMatrix = dataMatrix[~dataMatrix.obs[classOfInterest].isna()]
-    print ('na data removed')
+    
     return dataMatrix
 
 
-# In[86]:
+# In[193]:
 
 
 def labelSplit (dataMatrix, classOfInterest, labelOfInterest):
     dataMatrix = filterNormalize (dataMatrix, classOfInterest)
     dataMatrix.obs['classification_group'] = 'B'
     dataMatrix.obs.loc[dataMatrix.obs[dataMatrix.obs[classOfInterest]==labelOfInterest]
-                   .index,'classification_group'] = 'A' #make labels based on A/B of
-#     classofInterest
+                   .index,'classification_group'] = 'A'
     return dataMatrix
 
 
-# In[92]:
+# In[194]:
 
 
-def downsampleToSmallestCategory(dataMatrix, random_state, min_cells, 
-                                 keep_small_categories, 
-                                 classOfInterest = 'classification_group',
+def downsampleToSmallestCategory(dataMatrix, 
+        classOfInterest = 'classification_group',
+        random_state = None,
+        min_cells = 15,
+        keep_small_categories = True
 ) -> sc.AnnData:
     """
     returns an annData object in which all categories in 'classOfInterest' have
@@ -79,6 +99,7 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
         Be default categories with less than min_cells are discarded.
         Set to true to keep them
     """
+
     counts = dataMatrix.obs[classOfInterest].value_counts(sort=False)
     if len(counts[counts < min_cells]) > 0 and keep_small_categories is False:
         logg.warning(
@@ -111,13 +132,11 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
     return dataMatrix[sample_selection].copy()
 
 
-# In[93]:
+# In[199]:
 
 
-def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators, 
-                   randomState,  min_cells, keep_small_categories,
-                   nJobs, oobScore, Step, Cv): 
-
+def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators = 5000, 
+                   randomState = 0,  nJobs = -1, oobScore = True, Step = 0.2, Cv = 5): 
     """
     Builds and runs a random forest for one label in a class of interest
     
@@ -152,19 +171,16 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     
     """
     splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest)
-    
     downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix, 
-    random_state = randomState, min_cells = min_cells, 
-        keep_small_categories = keep_small_categories,
-        classOfInterest = 'classification_group', )
+        classOfInterest = 'classification_group',
+        random_state = None, min_cells = 15, keep_small_categories = False)
 
     feat_labels = downsampledMatrix.var_names 
     X = downsampledMatrix.X
-    y = downsampledMatrix.obs['classification_group'] #'A' or 'B' labels from labelSplit
+    y = downsampledMatrix.obs['classification_group']
     
     clf = RandomForestClassifier(n_estimators = nEstimators, random_state = randomState, 
                                  n_jobs = nJobs, oob_score = oobScore)
-    
     selector = RFECV(clf, step = Step, cv = Cv)
     
     clf.fit(X, y)
@@ -175,7 +191,7 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     return feature_selected, selector.estimator_.feature_importances_
 
 
-# In[94]:
+# In[200]:
 
 
 def resultWrite (classOfInterest, results_df, labelOfInterest,
@@ -194,12 +210,11 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
     return results_df 
 
 
-# In[99]:
+# In[201]:
 
 
-def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
-        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5):
-
+def scRFE(adata, classOfInterest, nEstimators = 5000, randomState = 0,  
+                  nJobs = -1, oobScore = True, Step = 0.2, Cv = 5):
     """
     Builds and runs a random forest with one vs all classification for each label 
     for one class of interest
@@ -217,10 +232,6 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         The number of trees in the forest
     randomState : int
         Controls random number being used
-    min_cells : int
-        Minimum number of cells in a given class to downsample.
-    keep_small_categories : bool 
-        Whether to keep classes with small number of observations, or to remove. 
     nJobs : int
         The number of jobs to run in parallel
     oobScore : bool
@@ -239,18 +250,19 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     """
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
-    dataMatrix = filterNormalize (dataMatrix, classOfInterest)
-    results_df = pd.DataFrame()
     
-    for labelOfInterest in sorted(np.unique(dataMatrix.obs[classOfInterest])): 
+    print("Original dataset ", dataMatrix.shape)
+    dataMatrix = filterNormalize (dataMatrix, classOfInterest)
+    print("Filtered dataset ",dataMatrix.shape)
+    print(pd.DataFrame(dataMatrix.obs.groupby([classOfInterest])[classOfInterest].count()))
+    
+    results_df = pd.DataFrame()
+    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]): 
+        print(labelOfInterest)
         dataMatrix_labelOfInterest = dataMatrix.copy()
-        
-        feature_selected, feature_importance =  makeOneForest(
-            dataMatrix = dataMatrix_labelOfInterest, classOfInterest = classOfInterest,
-            labelOfInterest = labelOfInterest,
-            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells, 
-            keep_small_categories = keep_small_categories, nJobs = nJobs, 
-            oobScore = oobScore, Step = Step, Cv = Cv)  
+        feature_selected, feature_importance = makeOneForest(dataMatrix_labelOfInterest, 
+                                                             classOfInterest, 
+                                    labelOfInterest = labelOfInterest)
     
         results_df = resultWrite (classOfInterest, results_df, 
                             labelOfInterest = labelOfInterest, 
@@ -259,4 +271,18 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         
 
     return results_df
+
+
+# In[ ]:
+
+
+# liverTFAge = scRFE (adata = adataLiver, classOfInterest = 'age', 
+#                        nEstimators = 10, randomState = 0,  
+#                   nJobs = -1, oobScore = True, Step = 0.2, Cv = 3)
+
+
+# In[ ]:
+
+
+
 
