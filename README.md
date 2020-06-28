@@ -1,9 +1,9 @@
 # scRFE (pronounced 'surf')
 
-scRFE (single-cell identity definition using random forest modelling and recursive feature elimination) is a python package that combines a random forest with recursive feature elimination to identify the set of genes necessary and sufficient for describing the different features of your single-cell RNA sequencing data.
+scRFE (single-cell identity definition using random forest modelling and recursive feature elimination) is a python package that uses a one versus all random forest classifier with recursive feature elimination to identify the set of genes necessary and sufficient to describe the different features of your single-cell RNA sequencing data.
 
 ## Installation and Documentation
-Use the package manager [pip](https://pip.pypa.io/en/stable/) to install scRFE for Python 3.6.
+Use the package manager [pip](https://pip.pypa.io/en/stable/) to install scRFE for Python.
 
 ```bash
 pip install scRFE
