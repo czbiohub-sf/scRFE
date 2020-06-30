@@ -6,7 +6,7 @@
    :target: https://scRFE.readthedocs.io/en/latest/usage.html
 
 
-How To Use scRFE
+Usage of scRFE
 ====================================
 The key idea of scRFE is to find the features most important in describing the input data using one versus all classification.
 
