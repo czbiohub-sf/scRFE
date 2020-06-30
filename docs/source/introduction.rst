@@ -1,9 +1,9 @@
-|PyPI| |Docs|
-
-.. |PyPI| image:: https://img.shields.io/pypi/v/scanpy.svg
-   :target: https://pypi.org/project/scRFE/
-.. |Docs| image:: https://readthedocs.com/projects/icb-scanpy/badge/?version=latest
-   :target: https://scRFE.readthedocs.io/en/latest/introduction.html
+.. |PyPI| |Docs|
+..
+.. .. |PyPI| image:: https://img.shields.io/pypi/v/scanpy.svg
+..    :target: https://pypi.org/project/scRFE/
+.. .. |Docs| image:: https://readthedocs.com/projects/icb-scanpy/badge/?version=latest
+..    :target: https://scRFE.readthedocs.io/en/latest/introduction.html
 
 Introduction
 =============
