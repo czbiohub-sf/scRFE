@@ -17,12 +17,12 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'scRFE'
-copyright = '2020, Madeline Park'
-author = 'Madeline Park'
+project = 'OnClass'
+copyright = '2019, Sheng Wang'
+author = 'Sheng Wang'
 
 # The full version, including alpha/beta/rc tags
-release = 'scRFE1.4.2'
+release = 'OnClass0.0.1'
 
 
 # -- General configuration ---------------------------------------------------
