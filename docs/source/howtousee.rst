@@ -1,4 +1,4 @@
-Using scRFE
+How To Use scRFE
 ====================================
 The key idea of scRFE is to find the features most important in describing the input data using one versus all classification.
 
