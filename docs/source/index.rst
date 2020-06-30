@@ -1,13 +1,13 @@
 |PyPI| |Docs|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/scanpy.svg
-   :target: https://pypi.org/project/scRFE/
+   :target: https://pypi.org/project/OnClass/
 .. |Docs| image:: https://readthedocs.com/projects/icb-scanpy/badge/?version=latest
-   :target: https://scRFE.readthedocs.io/en/latest/index.html
+   :target: https://onclass.readthedocs.io/en/latest/introduction.html
 
-scRFE (single-cell identity definition using random forest modelling and recursive feature elimination)
-============================================================================================================
-scRFE is a python package that uses a one versus all random forest classifier with recursive feature elimination to identify the set of genes necessary and sufficient to describe the different features of your single-cell RNA sequencing data.
+OnClass: single-cell annotation based on the Cell Ontology
+=========
+OnClass is a python package for single-cell cell type annotation. It uses the Cell Ontology to capture the cell type similarity. These similarities enable OnClass to annotate cell types that are never seen in the training data.
 
 .. toctree::
    :maxdepth: 1
@@ -15,5 +15,8 @@ scRFE is a python package that uses a one versus all random forest classifier wi
 
 
    introduction
-   usage
+   howtouse
    installation
+   datasets
+   Tutorial
+   references
