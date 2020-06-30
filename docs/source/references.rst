@@ -9,8 +9,9 @@ Users will need to import Scanpy and read_h5ad from Scanpy for the following ste
 
 scRFE does not alter the AnnData object.
 Thus, cells and genes must be filtered and normalized before running the code.
-Users may choose to filter out genes that appear in less than x number of cells,
-and cells that contain less than y number of genes. Example code is below:
+You may choose to filter out genes that appear in less than x number of cells, and cells that contain less than y number of genes.
+Example code is below: (this will make the code run faster)
+
 
 .. code:: bash
 
@@ -20,8 +21,7 @@ and cells that contain less than y number of genes. Example code is below:
 
 ..
 
-Users will also want to normalize your data before running scRFE.
-Example code is below:
+You may also want to normalize your data before running scRFE. Example code is below:
 
 .. code:: bash
 
@@ -31,7 +31,7 @@ Example code is below:
 
 ..
 
-Note that scRFE will automatically remove nan values in the dataset, and will print a statement when it does so.
+Note that scRFE will automatically remove cells in the dataset if they don’t have a value for the class of interest.
 
 2) **Call scRFE and Return Results DataFrame**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
