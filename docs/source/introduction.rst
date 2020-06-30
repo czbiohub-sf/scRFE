@@ -1,29 +1,16 @@
 |PyPI| |Docs|
 
 .. |PyPI| image:: https://img.shields.io/pypi/v/scanpy.svg
-   :target: https://pypi.org/project/OnClass/
+   :target: https://pypi.org/project/scRFE/
 .. |Docs| image:: https://readthedocs.com/projects/icb-scanpy/badge/?version=latest
-   :target: https://onclass.readthedocs.io/en/latest/introduction.html
+   :target: https://scRFE.readthedocs.io/en/latest/introduction.html
 
 Introduction
-=========
-OnClass is a python package for single-cell cell type annotation. It uses the Cell Ontology to capture the cell type similarity. These similarities enable OnClass to annotate cell types that are never seen in the training data.
+=============
+scRFE (single-cell identity definition using random forest modelling and recursive feature elimination) is a python package that uses a one vs all random forest classifier with recursive feature elimination to identify the set of genes necessary and sufficient to describe the different features of your single-cell RNA sequencing data.
 
-OnClass package is still under development. A preprint of OnClass paper is on `bioRxiv <https://www.biorxiv.org/content/10.1101/810234v1>`__
-All datasets used in OnClass can be found in `figshare <https://figshare.com/projects/OnClass/70637>`__.
-Currently, OnClass supports
+scRFE is still under development. A preprint of our scRFE paper will be available soon on bioRxiv. All datasets used with scRFE are available on Figshare.
 
-1) annotate cell type
+scRFE is produced by CZ Biohub.
 
-
-2) integrating different single-cell datasets based on the Cell Ontology
-
-
-3) marker genes identification
-
-
-OnClass is a joint work by `Altman lab <https://helix.stanford.edu/>`__ at stanford and `czbiohub <https://www.czbiohub.org/>`__.
-
-For questions about the software, please contact `Sheng Wang <http://web.stanford.edu/~swang91/>`__ at swang91@stanford.edu.
-
-Our web server can be found at: `https://onclass.readthedocs.io/ <https://onclass.readthedocs.io/>`__.
+For questions, please contact Madeline Park at madeline.park@czbiohub.org.
