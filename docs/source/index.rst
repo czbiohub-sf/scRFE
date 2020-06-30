@@ -13,8 +13,8 @@ scRFE is a python package that uses a one versus all random forest classifier wi
 .. toctree::
    :maxdepth: 2
    .. :hidden:
-
-
-   introduction
-   usage
-   installation
+   ..
+   ..
+   .. introduction
+   .. usage
+   .. installation
