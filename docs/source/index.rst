@@ -17,4 +17,4 @@ scRFE is a python package that uses a one versus all random forest classifier wi
 
    introduction
    howtousescrfe
-   installationscrfe
+   installingscrfe
