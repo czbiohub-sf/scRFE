@@ -1,0 +1,8 @@
+INFO:root:Started
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2380 cells. The original counts where {'B': 4100, 'A': 2380}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 339 cells. The original counts where {'B': 6141, 'A': 339}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 104 cells. The original counts where {'B': 6376, 'A': 104}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2256 cells. The original counts where {'B': 4224, 'A': 2256}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 854 cells. The original counts where {'B': 5626, 'A': 854}
+INFO:root:Finished
