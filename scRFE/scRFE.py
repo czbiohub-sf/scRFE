@@ -1,3 +1,8 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[145]:
+
 
 # import dependencies
 import numpy as np
@@ -13,7 +18,9 @@ from sklearn.feature_selection import RFECV
 from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
-import matplotlib.pyplot as plt
+
+
+# In[146]:
 
 
 # transform all category columns in string columns
@@ -21,6 +28,9 @@ def columnToString (dataMatrix):
     cat_columns = dataMatrix.obs.select_dtypes(['category']).columns
     dataMatrix.obs[cat_columns] = dataMatrix.obs[cat_columns].astype(str)
     return dataMatrix
+
+
+# In[147]:
 
 
 # remove observations that are NaN for the category
@@ -39,39 +49,18 @@ def filterNormalize (dataMatrix, classOfInterest, verbosity):
 # set the A/B labels for classification
 def labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity):
     dataMatrix = filterNormalize (dataMatrix, classOfInterest, verbosity)
-=======
-# remove observations that are NaN for the category
-def filterNormalize (dataMatrix, classOfInterest):
-    np.random.seed(644685)
-#     sc.pp.filter_genes(dataMatrix, min_cells=0)
-    dataMatrix = dataMatrix[dataMatrix.obs[classOfInterest]!='nan']
-    dataMatrix = dataMatrix[~dataMatrix.obs[classOfInterest].isna()]
-    print ('Removed NaN observations in the selected category')
-    return dataMatrix
-
-
-# set the A/B labels for classification
-def labelSplit (dataMatrix, classOfInterest, labelOfInterest):
-    dataMatrix = filterNormalize (dataMatrix, classOfInterest)
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
     dataMatrix.obs['classification_group'] = 'B'
     dataMatrix.obs.loc[dataMatrix.obs[dataMatrix.obs[classOfInterest]==labelOfInterest]
                    .index,'classification_group'] = 'A' #make labels based on A/B of classofInterest
     return dataMatrix
 
 
-<<<<<<< HEAD
 # In[149]:
 
 
 # downsample observations to balance the groups
 def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
                                  keep_small_categories, verbosity,
-=======
-# downsample observations to balance the groups
-def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
-                                 keep_small_categories = True,
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
                                  classOfInterest = 'classification_group',
 ) -> sc.AnnData:
     """
@@ -119,14 +108,10 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
     return dataMatrix[sample_selection].copy()
 
 
-<<<<<<< HEAD
 # In[155]:
 
 
 # build the random forest classifier and perform feature elimination
-=======
-# build the random forest classifier and perform variable elimination
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
                    randomState,  min_cells, keep_small_categories,
                    nJobs, oobScore, Step, Cv, verbosity):
@@ -174,9 +159,6 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         print(labelOfInterest)
         print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
 
-    print(labelOfInterest)
-    print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
-
     feat_labels = downsampledMatrix.var_names
     X = downsampledMatrix.X
     y = downsampledMatrix.obs['classification_group'] #'A' or 'B' labels from labelSplit
@@ -198,12 +180,9 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     feature_selected = feature_selected[selector.support_]
 
     return feature_selected, selector.estimator_.feature_importances_,score,X_new,y
-<<<<<<< HEAD
 
 
 # In[156]:
-=======
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 
 
 # write the results
@@ -222,13 +201,10 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
     results_df = pd.concat([results_df, resaux], axis=1)
     return results_df
 
-<<<<<<< HEAD
 
 # In[157]:
 
 
-=======
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 # plot the Gini importances
 def scRFEimplot(X_new,y):
 
@@ -247,13 +223,10 @@ def scRFEimplot(X_new,y):
 
     return fig,ax
 
-<<<<<<< HEAD
 
 # In[158]:
 
 
-=======
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 # main scRFE function
 def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
         keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5,
@@ -315,20 +288,11 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     for labelOfInterest in sorted(np.unique(dataMatrix.obs[classOfInterest]))[0:2]:
         dataMatrix_labelOfInterest = dataMatrix.copy()
 
-<<<<<<< HEAD
         feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
             classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
             nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
                 keep_small_categories = keep_small_categories,
                    nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
-=======
-        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(
-            dataMatrix = dataMatrix_labelOfInterest, classOfInterest = classOfInterest,
-            labelOfInterest = labelOfInterest,
-            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
-            keep_small_categories = keep_small_categories, nJobs = nJobs,
-            oobScore = oobScore, Step = Step, Cv = Cv)
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 
         results_df = resultWrite (classOfInterest, results_df,
                             labelOfInterest = labelOfInterest,
@@ -339,19 +303,9 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
 
         fig,ax = scRFEimplot(X_new,y)
         fig_df[labelOfInterest] = (fig,ax)
-<<<<<<< HEAD
 
 
     return results_df,score_df,fig_df
 
 
 # In[ ]:
-
-
-
-
-=======
-
-
-    return results_df,score_df,fig_df
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
