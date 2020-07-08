@@ -10,6 +10,7 @@ dist/scRFE-1.3-py3-none-any.whl
 dist/scRFE-1.3.tar.gz
 dist/scRFE-1.4.0.tar.gz
 dist/scRFE-1.4.1.tar.gz
+dist/scRFE-1.4.2.tar.gz
 docs/.DS_Store
 docs/Makefile
 docs/make.bat
@@ -42,10 +43,11 @@ docs/build/html/_static/underscore.js
 docs/source/.DS_Store
 docs/source/API.rst
 docs/source/conf.py
+docs/source/howtousee.rst
+docs/source/howtousescrfe.rst
 docs/source/index.rst
-docs/source/installation.rst
+docs/source/installingscrfe.rst
 docs/source/introduction.rst
-docs/source/references.rst
 scRFE/.DS_Store
 scRFE/__init__.py
 scRFE/scRFE.py
@@ -70,6 +72,9 @@ scripts/practiceScripts/.DS_Store
 scripts/practiceScripts/KidneyFacsAge1000.csv
 scripts/practiceScripts/SortingResults.ipynb
 scripts/practiceScripts/Untitled.ipynb
+scripts/practiceScripts/Untitled1.ipynb
+scripts/practiceScripts/Untitled2.ipynb
+scripts/practiceScripts/graphJuly1.ipynb
 scripts/practiceScripts/jun24Testing.ipynb
 scripts/practiceScripts/kidney1000collectingDuctPrincipal
 scripts/practiceScripts/kidneyFacsComparison.ipynb
@@ -86,7 +91,7 @@ scripts/practiceScripts/scRFE-tutorial.ipynb
 scripts/practiceScripts/scRFE-tutorial.py
 scripts/practiceScripts/scRFE0624.ipynb
 scripts/practiceScripts/scRFEV5cleanedUp.ipynb
-scripts/practiceScripts/scRFE_jun19.ipynb
+scripts/practiceScripts/scRFE_jun19_FROMANGELA.ipynb
 scripts/practiceScripts/scRFE_starter_codeV1.ipynb
 scripts/practiceScripts/scRFE_starter_codeV2.ipynb
 scripts/practiceScripts/scRFE_starter_codeV3.ipynb
@@ -106,6 +111,9 @@ scripts/practiceScripts/venn-diagram.ipynb
 scripts/practiceScripts/venn-diagram.py
 scripts/practiceScripts/.ipynb_checkpoints/SortingResults-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/Untitled-checkpoint.ipynb
+scripts/practiceScripts/.ipynb_checkpoints/Untitled1-checkpoint.ipynb
+scripts/practiceScripts/.ipynb_checkpoints/Untitled2-checkpoint.ipynb
+scripts/practiceScripts/.ipynb_checkpoints/graphJuly1-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/jun24Testing-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/kidneyFacsComparison-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/localInstallation-checkpoint.ipynb
@@ -116,12 +124,13 @@ scripts/practiceScripts/.ipynb_checkpoints/scRFE-split-save-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE-tutorial-anndata-subset-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE-tutorial-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFEV5cleanedUp-checkpoint.ipynb
-scripts/practiceScripts/.ipynb_checkpoints/scRFE_jun19-checkpoint.ipynb
+scripts/practiceScripts/.ipynb_checkpoints/scRFE_jun19_FROMANGELA-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE_starter_codeV1-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE_starter_codeV2-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE_starter_codeV3-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE_starter_codeV4-Heart-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFE_starter_codeV5-checkpoint.ipynb
+scripts/practiceScripts/.ipynb_checkpoints/scRFEjun-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFEsourceV2-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFEsourceV3-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/scRFEsourceV4-checkpoint.ipynb
