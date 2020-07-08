@@ -1,22 +1,10 @@
-<<<<<<< HEAD
-#!/usr/bin/env python
-# coding: utf-8
 
-# In[145]:
-
-
-=======
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 # import dependencies
 import numpy as np
 import pandas as pd
 import scanpy as sc
 import random
 import logging as logg
-<<<<<<< HEAD
-=======
-
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
@@ -24,18 +12,8 @@ from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
 from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
-<<<<<<< HEAD
 import matplotlib.pyplot as plt
-
-
-# In[146]:
-=======
-
-# from sklearn.feature_selection import RFE
-# import seaborn as sns
 import matplotlib.pyplot as plt
-# import scanpy.external as sce
->>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 
 
 # transform all category columns in string columns
@@ -43,10 +21,6 @@ def columnToString (dataMatrix):
     cat_columns = dataMatrix.obs.select_dtypes(['category']).columns
     dataMatrix.obs[cat_columns] = dataMatrix.obs[cat_columns].astype(str)
     return dataMatrix
-
-
-<<<<<<< HEAD
-# In[147]:
 
 
 # remove observations that are NaN for the category
@@ -156,7 +130,7 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
 def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
                    randomState,  min_cells, keep_small_categories,
                    nJobs, oobScore, Step, Cv, verbosity):
-    #need to add verbose arg details 
+    #need to add verbose arg details
     """
     Builds and runs a random forest for one label in a class of interest
     Parameters
@@ -180,7 +154,7 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-    verbosity : bool 
+    verbosity : bool
         Whether to include print statements.
     Returns
     -------
@@ -191,18 +165,18 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     """
     splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity)
 
-    downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix, 
-    random_state = randomState, min_cells = min_cells, 
+    downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix,
+    random_state = randomState, min_cells = min_cells,
         keep_small_categories = keep_small_categories, verbosity = verbosity,
         classOfInterest = 'classification_group' )
-    
+
     if verbosity == True:
         print(labelOfInterest)
         print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
 
     print(labelOfInterest)
     print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
-    
+
     feat_labels = downsampledMatrix.var_names
     X = downsampledMatrix.X
     y = downsampledMatrix.obs['classification_group'] #'A' or 'B' labels from labelSplit
@@ -217,9 +191,9 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     selector.fit(X, y)
     feature_selected = feat_labels[selector.support_]
     dataMatrix.obs['classification_group'] = 'B'
-    
+
     X_new = selector.fit_transform(X, y)
-    selector.fit(X_new, y) 
+    selector.fit(X_new, y)
     score = selector.score(X_new, y)
     feature_selected = feature_selected[selector.support_]
 
@@ -257,7 +231,7 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
 >>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 # plot the Gini importances
 def scRFEimplot(X_new,y):
-    
+
     rf= RandomForestClassifier(random_state=0).fit(X_new, y)
     result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
                                     n_jobs=-1)
@@ -270,7 +244,7 @@ def scRFEimplot(X_new,y):
     ax.set_ylabel("Features")
     fig.tight_layout()
     plt.show()
-    
+
     return fig,ax
 
 <<<<<<< HEAD
@@ -282,11 +256,11 @@ def scRFEimplot(X_new,y):
 >>>>>>> 680ba53ebd5f0f99741b270a7f8b5a7c67091025
 # main scRFE function
 def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
-        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5, 
+        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5,
           verbosity = True):
 
-#     add verbosity arg 
-    
+#     add verbosity arg
+
     """
     Builds and runs a random forest with one vs all classification for each label
     for one class of interest
@@ -315,7 +289,7 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-    verbosity : bool 
+    verbosity : bool
         Whether to include print statements.
     Returns
     -------
@@ -327,14 +301,14 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     fig_df: dict
         Contains figures.
     """
-    
-#     ADD THE OTHER THINGS scRFE main returns too!!! 
-    
+
+#     ADD THE OTHER THINGS scRFE main returns too!!!
+
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
     dataMatrix = filterNormalize (dataMatrix, classOfInterest, verbosity)
     results_df = pd.DataFrame()
-    
+
     score_df = {}
     fig_df = {}
 
@@ -342,9 +316,9 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         dataMatrix_labelOfInterest = dataMatrix.copy()
 
 <<<<<<< HEAD
-        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix, 
-            classOfInterest = classOfInterest, labelOfInterest = labelOfInterest, 
-            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells, 
+        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
+            classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
+            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
                 keep_small_categories = keep_small_categories,
                    nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
 =======
@@ -360,9 +334,9 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
                             labelOfInterest = labelOfInterest,
                     feature_selected = feature_selected,
                     feature_importance = feature_importance)
-        
+
         score_df[labelOfInterest] = model_score
-        
+
         fig,ax = scRFEimplot(X_new,y)
         fig_df[labelOfInterest] = (fig,ax)
 <<<<<<< HEAD
