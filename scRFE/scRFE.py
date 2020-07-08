@@ -1,32 +1,25 @@
-#!/usr/bin/env python
-# coding: utf-8
-
-# # scRFE
-
-# In[3]:
-
-
-# Imports
+# import dependencies
 import numpy as np
 import pandas as pd
 import scanpy as sc
 import random
-from anndata import read_h5ad
+import logging as logg
+
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
-from sklearn.metrics import accuracy_score
-from sklearn.feature_selection import RFE
+from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
-import seaborn as sns
+from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
+
+# from sklearn.feature_selection import RFE
+# import seaborn as sns
 import matplotlib.pyplot as plt
-import scanpy.external as sce
-import logging as logg
+# import scanpy.external as sce
 
 
-# In[84]:
-
-
+# transform all category columns in string columns
 def columnToString (dataMatrix):
     cat_columns = dataMatrix.obs.select_dtypes(['category']).columns
     dataMatrix.obs[cat_columns] = dataMatrix.obs[cat_columns].astype(str)
@@ -34,36 +27,28 @@ def columnToString (dataMatrix):
     return dataMatrix
 
 
-# In[101]:
-
-
+# remove observations that are NaN for the category
 def filterNormalize (dataMatrix, classOfInterest):
     np.random.seed(644685)
-#     sc.pp.filter_cells(dataMatrix, min_genes=0)
 #     sc.pp.filter_genes(dataMatrix, min_cells=0)
     dataMatrix = dataMatrix[dataMatrix.obs[classOfInterest]!='nan']
     dataMatrix = dataMatrix[~dataMatrix.obs[classOfInterest].isna()]
-    print ('na data removed')
+    print ('Removed NaN observations in the selected category')
     return dataMatrix
 
 
-# In[86]:
-
-
+# set the A/B labels for classification
 def labelSplit (dataMatrix, classOfInterest, labelOfInterest):
     dataMatrix = filterNormalize (dataMatrix, classOfInterest)
     dataMatrix.obs['classification_group'] = 'B'
     dataMatrix.obs.loc[dataMatrix.obs[dataMatrix.obs[classOfInterest]==labelOfInterest]
-                   .index,'classification_group'] = 'A' #make labels based on A/B of
-#     classofInterest
+                   .index,'classification_group'] = 'A' #make labels based on A/B of classofInterest
     return dataMatrix
 
 
-# In[92]:
-
-
+# downsample observations to balance the groups
 def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
-                                 keep_small_categories,
+                                 keep_small_categories = True,
                                  classOfInterest = 'classification_group',
 ) -> sc.AnnData:
     """
@@ -111,9 +96,7 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
     return dataMatrix[sample_selection].copy()
 
 
-# In[93]:
-
-
+# build the random forest classifier and perform variable elimination
 def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
                    randomState,  min_cells, keep_small_categories,
                    nJobs, oobScore, Step, Cv):
@@ -158,6 +141,9 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         keep_small_categories = keep_small_categories,
         classOfInterest = 'classification_group', )
 
+    print(labelOfInterest)
+    print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
+    
     feat_labels = downsampledMatrix.var_names
     X = downsampledMatrix.X
     y = downsampledMatrix.obs['classification_group'] #'A' or 'B' labels from labelSplit
@@ -165,19 +151,23 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     clf = RandomForestClassifier(n_estimators = nEstimators, random_state = randomState,
                                  n_jobs = nJobs, oob_score = oobScore)
 
-    selector = RFECV(clf, step = Step, cv = Cv)
+    Cv = StratifiedKFold(Cv)
+    selector = RFECV(clf, step = Step, cv = Cv, scoring='f1_weighted')
 
     clf.fit(X, y)
     selector.fit(X, y)
     feature_selected = feat_labels[selector.support_]
     dataMatrix.obs['classification_group'] = 'B'
+    
+    X_new = selector.fit_transform(X, y)
+    selector.fit(X_new, y) 
+    score = selector.score(X_new, y)
+    feature_selected = feature_selected[selector.support_]
 
-    return feature_selected, selector.estimator_.feature_importances_
+    return feature_selected, selector.estimator_.feature_importances_,score,X_new,y
 
 
-# In[94]:
-
-
+# write the results
 def resultWrite (classOfInterest, results_df, labelOfInterest,
                 feature_selected, feature_importance):
 
@@ -193,10 +183,25 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
     results_df = pd.concat([results_df, resaux], axis=1)
     return results_df
 
+# plot the Gini importances
+def scRFEimplot(X_new,y):
+    
+    rf= RandomForestClassifier(random_state=0).fit(X_new, y)
+    result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
+                                    n_jobs=-1)
 
-# In[99]:
+    fig, ax = plt.subplots()
+    sorted_idx = result.importances_mean.argsort()
+    ax.boxplot(result.importances[sorted_idx].T*100,
+               vert=False, labels=range(X_new.shape[1]))
+    ax.set_title("Permutation Importance of each feature")
+    ax.set_ylabel("Features")
+    fig.tight_layout()
+    plt.show()
+    
+    return fig,ax
 
-
+# main scRFE function
 def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
         keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5):
 
@@ -241,11 +246,14 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     dataMatrix = columnToString (dataMatrix)
     dataMatrix = filterNormalize (dataMatrix, classOfInterest)
     results_df = pd.DataFrame()
+    
+    score_df = {}
+    fig_df = {}
 
     for labelOfInterest in sorted(np.unique(dataMatrix.obs[classOfInterest])):
         dataMatrix_labelOfInterest = dataMatrix.copy()
 
-        feature_selected, feature_importance =  makeOneForest(
+        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(
             dataMatrix = dataMatrix_labelOfInterest, classOfInterest = classOfInterest,
             labelOfInterest = labelOfInterest,
             nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
@@ -256,6 +264,11 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
                             labelOfInterest = labelOfInterest,
                     feature_selected = feature_selected,
                     feature_importance = feature_importance)
+        
+        score_df[labelOfInterest] = model_score
+        
+        fig,ax = scRFEimplot(X_new,y)
+        fig_df[labelOfInterest] = (fig,ax)
 
 
-    return results_df
+    return results_df,score_df,fig_df
