@@ -12,6 +12,7 @@ dist/scRFE-1.4.0.tar.gz
 dist/scRFE-1.4.1.tar.gz
 dist/scRFE-1.4.2.tar.gz
 dist/scRFE-1.4.3.tar.gz
+dist/scRFE-1.4.4.tar.gz
 docs/.DS_Store
 docs/Makefile
 docs/make.bat
