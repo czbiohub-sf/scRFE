@@ -152,7 +152,7 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
                                  n_jobs = nJobs, oob_score = oobScore)
 
     Cv = StratifiedKFold(Cv)
-    selector = RFECV(clf, step = Step, cv = Cv, scoring='f1_weighted')
+    selector = RFECV(clf, step = Step, cv = Cv, scoring='f1_weighted', min_features_to_select=2)
 
     clf.fit(X, y)
     selector.fit(X, y)
