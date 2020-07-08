@@ -1,0 +1,255 @@
+INFO:root:Started
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2380 cells. The original counts where {'B': 4100, 'A': 2380}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 339 cells. The original counts where {'B': 6141, 'A': 339}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 104 cells. The original counts where {'B': 6376, 'A': 104}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2256 cells. The original counts where {'B': 4224, 'A': 2256}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 854 cells. The original counts where {'B': 5626, 'A': 854}
+INFO:root:Finished
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2380 cells. The original counts where {'B': 4100, 'A': 2380}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 339 cells. The original counts where {'B': 6141, 'A': 339}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 104 cells. The original counts where {'B': 6376, 'A': 104}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2256 cells. The original counts where {'B': 4224, 'A': 2256}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 854 cells. The original counts where {'B': 5626, 'A': 854}
+ERROR:root:Error Message
+Stack (most recent call last):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py", line 16, in <module>
+    app.launch_new_instance()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/traitlets/config/application.py", line 664, in launch_instance
+    app.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelapp.py", line 583, in start
+    self.io_loop.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/platform/asyncio.py", line 153, in start
+    self.asyncio_loop.run_forever()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 538, in run_forever
+    self._run_once()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 1782, in _run_once
+    handle._run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 690, in <lambda>
+    lambda f: self._run_callback(functools.partial(callback, future))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 743, in _run_callback
+    ret = callback()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 787, in inner
+    self.run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 748, in run
+    yielded = self.gen.send(value)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 361, in process_one
+    yield gen.maybe_future(dispatch(*args))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 268, in dispatch_shell
+    yield gen.maybe_future(handler(stream, idents, msg))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 541, in execute_request
+    user_expressions, allow_stdin,
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py", line 300, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/zmqshell.py", line 536, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2858, in run_cell
+    raw_cell, store_history, silent, shell_futures)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2886, in _run_cell
+    return runner(coro)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/async_helpers.py", line 68, in _pseudo_sync_runner
+    coro.send(None)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3063, in run_cell_async
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3254, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3331, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-31-451894cdb21e>", line 4, in <module>
+    logging.error('Error Message', stack_info=True)
+ERROR:root:Error Message
+Stack (most recent call last):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py", line 16, in <module>
+    app.launch_new_instance()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/traitlets/config/application.py", line 664, in launch_instance
+    app.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelapp.py", line 583, in start
+    self.io_loop.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/platform/asyncio.py", line 153, in start
+    self.asyncio_loop.run_forever()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 538, in run_forever
+    self._run_once()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 1782, in _run_once
+    handle._run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 690, in <lambda>
+    lambda f: self._run_callback(functools.partial(callback, future))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 743, in _run_callback
+    ret = callback()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 787, in inner
+    self.run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 748, in run
+    yielded = self.gen.send(value)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 361, in process_one
+    yield gen.maybe_future(dispatch(*args))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 268, in dispatch_shell
+    yield gen.maybe_future(handler(stream, idents, msg))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 541, in execute_request
+    user_expressions, allow_stdin,
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py", line 300, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/zmqshell.py", line 536, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2858, in run_cell
+    raw_cell, store_history, silent, shell_futures)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2886, in _run_cell
+    return runner(coro)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/async_helpers.py", line 68, in _pseudo_sync_runner
+    coro.send(None)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3063, in run_cell_async
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3254, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3331, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-32-451894cdb21e>", line 4, in <module>
+    logging.error('Error Message', stack_info=True)
+ERROR:root:Error Message
+Stack (most recent call last):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py", line 16, in <module>
+    app.launch_new_instance()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/traitlets/config/application.py", line 664, in launch_instance
+    app.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelapp.py", line 583, in start
+    self.io_loop.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/platform/asyncio.py", line 153, in start
+    self.asyncio_loop.run_forever()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 538, in run_forever
+    self._run_once()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 1782, in _run_once
+    handle._run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 690, in <lambda>
+    lambda f: self._run_callback(functools.partial(callback, future))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 743, in _run_callback
+    ret = callback()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 787, in inner
+    self.run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 748, in run
+    yielded = self.gen.send(value)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 361, in process_one
+    yield gen.maybe_future(dispatch(*args))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 268, in dispatch_shell
+    yield gen.maybe_future(handler(stream, idents, msg))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 541, in execute_request
+    user_expressions, allow_stdin,
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py", line 300, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/zmqshell.py", line 536, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2858, in run_cell
+    raw_cell, store_history, silent, shell_futures)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2886, in _run_cell
+    return runner(coro)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/async_helpers.py", line 68, in _pseudo_sync_runner
+    coro.send(None)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3063, in run_cell_async
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3254, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3331, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-33-53815ea2ab69>", line 4, in <module>
+    logging.error('Error Message', stack_info=True)
+ERROR:root:Error Message
+Stack (most recent call last):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 193, in _run_module_as_main
+    "__main__", mod_spec)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/runpy.py", line 85, in _run_code
+    exec(code, run_globals)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel_launcher.py", line 16, in <module>
+    app.launch_new_instance()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/traitlets/config/application.py", line 664, in launch_instance
+    app.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelapp.py", line 583, in start
+    self.io_loop.start()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/platform/asyncio.py", line 153, in start
+    self.asyncio_loop.run_forever()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 538, in run_forever
+    self._run_once()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/base_events.py", line 1782, in _run_once
+    handle._run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/asyncio/events.py", line 88, in _run
+    self._context.run(self._callback, *self._args)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 690, in <lambda>
+    lambda f: self._run_callback(functools.partial(callback, future))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/ioloop.py", line 743, in _run_callback
+    ret = callback()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 787, in inner
+    self.run()
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 748, in run
+    yielded = self.gen.send(value)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 361, in process_one
+    yield gen.maybe_future(dispatch(*args))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 268, in dispatch_shell
+    yield gen.maybe_future(handler(stream, idents, msg))
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/kernelbase.py", line 541, in execute_request
+    user_expressions, allow_stdin,
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/tornado/gen.py", line 209, in wrapper
+    yielded = next(result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/ipkernel.py", line 300, in do_execute
+    res = shell.run_cell(code, store_history=store_history, silent=silent)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/ipykernel/zmqshell.py", line 536, in run_cell
+    return super(ZMQInteractiveShell, self).run_cell(*args, **kwargs)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2858, in run_cell
+    raw_cell, store_history, silent, shell_futures)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 2886, in _run_cell
+    return runner(coro)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/async_helpers.py", line 68, in _pseudo_sync_runner
+    coro.send(None)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3063, in run_cell_async
+    interactivity=interactivity, compiler=compiler, result=result)
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3254, in run_ast_nodes
+    if (await self.run_code(code, result,  async_=asy)):
+  File "/Users/madelinepark/opt/anaconda3/lib/python3.7/site-packages/IPython/core/interactiveshell.py", line 3331, in run_code
+    exec(code_obj, self.user_global_ns, self.user_ns)
+  File "<ipython-input-34-53815ea2ab69>", line 4, in <module>
+    logging.error('Error Message', stack_info=True)
+INFO:LOGGER_NAME:So this is shown on the console
+WARNING:LOGGER_NAME:This too
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2380 cells. The original counts where {'B': 4100, 'A': 2380}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 2380 cells. The original counts where {'B': 4100, 'A': 2380}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
+INFO:root:The cells in category 'classification_group' had been down-sampled to have each 547 cells. The original counts where {'B': 5933, 'A': 547}
