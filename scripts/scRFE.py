@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[145]:
+# In[168]:
 
 
 # import dependencies
@@ -18,6 +18,7 @@ from sklearn.feature_selection import RFECV
 from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
+from tqdm import tqdm 
 
 
 # In[146]:
@@ -202,38 +203,13 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
     return results_df
 
 
-# In[157]:
-
-
-# plot the Gini importances
-def scRFEimplot(X_new,y):
-    
-    rf= RandomForestClassifier(random_state=0).fit(X_new, y)
-    result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
-                                    n_jobs=-1)
-
-    fig, ax = plt.subplots()
-    sorted_idx = result.importances_mean.argsort()
-    ax.boxplot(result.importances[sorted_idx].T*100,
-               vert=False, labels=range(X_new.shape[1]))
-    ax.set_title("Permutation Importance of each feature")
-    ax.set_ylabel("Features")
-    fig.tight_layout()
-    plt.show()
-    
-    return fig,ax
-
-
-# In[158]:
+# In[164]:
 
 
 # main scRFE function
 def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
         keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5, 
-          verbosity = True):
-
-#     add verbosity arg 
-    
+          verbosity = True):    
     """
     Builds and runs a random forest with one vs all classification for each label
     for one class of interest
@@ -271,11 +247,7 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         "label" for one column, then "label + gini" for the corresponding column.
     score_df: dict
         Score for each label in classOfInterest.
-    fig_df: dict
-        Contains figures.
     """
-    
-#     ADD THE OTHER THINGS scRFE main returns too!!! 
     
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
@@ -283,33 +255,25 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     results_df = pd.DataFrame()
     
     score_df = {}
-    fig_df = {}
+    for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
 
-    for labelOfInterest in sorted(np.unique(dataMatrix.obs[classOfInterest]))[0:2]:
-        dataMatrix_labelOfInterest = dataMatrix.copy()
+        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+            
+            dataMatrix_labelOfInterest = dataMatrix.copy()
 
-        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix, 
-            classOfInterest = classOfInterest, labelOfInterest = labelOfInterest, 
-            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells, 
-                keep_small_categories = keep_small_categories,
-                   nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
+            feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix, 
+                classOfInterest = classOfInterest, labelOfInterest = labelOfInterest, 
+                nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells, 
+                    keep_small_categories = keep_small_categories,
+                       nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
 
-        results_df = resultWrite (classOfInterest, results_df,
-                            labelOfInterest = labelOfInterest,
-                    feature_selected = feature_selected,
-                    feature_importance = feature_importance)
-        
-        score_df[labelOfInterest] = model_score
-        
-        fig,ax = scRFEimplot(X_new,y)
-        fig_df[labelOfInterest] = (fig,ax)
+            results_df = resultWrite (classOfInterest, results_df,
+                                labelOfInterest = labelOfInterest,
+                        feature_selected = feature_selected,
+                        feature_importance = feature_importance)
 
+            score_df[labelOfInterest] = model_score
+        pass
 
-    return results_df,score_df,fig_df
-
-
-# In[ ]:
-
-
-
+    return results_df,score_df
 

@@ -1,90 +1,68 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# # scRFE
-
-# In[154]:
+# In[168]:
 
 
-# madeline editting 06/22
-
-
-# In[186]:
-
-
-# Imports
+# import dependencies
 import numpy as np
 import pandas as pd
 import scanpy as sc
 import random
-from anndata import read_h5ad
+import logging as logg
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
-from sklearn.metrics import accuracy_score
-from sklearn.feature_selection import RFE
+from sklearn.model_selection import StratifiedKFold
 from sklearn.feature_selection import RFECV
-import seaborn as sns
+from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
-import scanpy.external as sce
-import logging as logg
+from tqdm import tqdm
 
 
-# In[187]:
+# In[146]:
 
 
-# adataLiver = read_h5ad('/Users/madelinepark/Downloads/Liver_droplet.h5ad')
-
-
-# In[188]:
-
-
-# mouse_tfs = pd.read_csv("/Users/madelinepark/Downloads/GO_term_summary_20171110_222852.csv")
-# mouse_tfs.head()
-
-
-# In[191]:
-
-
+# transform all category columns in string columns
 def columnToString (dataMatrix):
     cat_columns = dataMatrix.obs.select_dtypes(['category']).columns
     dataMatrix.obs[cat_columns] = dataMatrix.obs[cat_columns].astype(str)
-
     return dataMatrix
 
 
-# In[192]:
+# In[147]:
 
 
-def filterNormalize (dataMatrix, classOfInterest):
+# remove observations that are NaN for the category
+def filterNormalize (dataMatrix, classOfInterest, verbosity):
     np.random.seed(644685)
-    sc.pp.filter_cells(dataMatrix, min_genes=0)
-    sc.pp.filter_genes(dataMatrix, min_cells=0)
     dataMatrix = dataMatrix[dataMatrix.obs[classOfInterest]!='nan']
     dataMatrix = dataMatrix[~dataMatrix.obs[classOfInterest].isna()]
-
+    if verbosity == True:
+        print ('Removed NaN observations in the selected category')
     return dataMatrix
 
 
-# In[193]:
+# In[148]:
 
 
-def labelSplit (dataMatrix, classOfInterest, labelOfInterest):
-    dataMatrix = filterNormalize (dataMatrix, classOfInterest)
+# set the A/B labels for classification
+def labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity):
+    dataMatrix = filterNormalize (dataMatrix, classOfInterest, verbosity)
     dataMatrix.obs['classification_group'] = 'B'
     dataMatrix.obs.loc[dataMatrix.obs[dataMatrix.obs[classOfInterest]==labelOfInterest]
-                   .index,'classification_group'] = 'A'
+                   .index,'classification_group'] = 'A' #make labels based on A/B of classofInterest
     return dataMatrix
 
 
-# In[194]:
+# In[149]:
 
 
-def downsampleToSmallestCategory(dataMatrix,
-        classOfInterest = 'classification_group',
-        random_state = None,
-        min_cells = 15,
-        keep_small_categories = True
+# downsample observations to balance the groups
+def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
+                                 keep_small_categories, verbosity,
+                                 classOfInterest = 'classification_group',
 ) -> sc.AnnData:
     """
     returns an annData object in which all categories in 'classOfInterest' have
@@ -99,7 +77,6 @@ def downsampleToSmallestCategory(dataMatrix,
         Be default categories with less than min_cells are discarded.
         Set to true to keep them
     """
-
     counts = dataMatrix.obs[classOfInterest].value_counts(sort=False)
     if len(counts[counts < min_cells]) > 0 and keep_small_categories is False:
         logg.warning(
@@ -132,14 +109,16 @@ def downsampleToSmallestCategory(dataMatrix,
     return dataMatrix[sample_selection].copy()
 
 
-# In[199]:
+# In[155]:
 
 
-def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators = 5000,
-                   randomState = 0,  nJobs = -1, oobScore = True, Step = 0.2, Cv = 5):
+# build the random forest classifier and perform feature elimination
+def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
+                   randomState,  min_cells, keep_small_categories,
+                   nJobs, oobScore, Step, Cv, verbosity):
+    #need to add verbose arg details
     """
     Builds and runs a random forest for one label in a class of interest
-
     Parameters
     ----------
     dataMatrix : anndata object
@@ -161,39 +140,53 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators = 5
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-
+    verbosity : bool
+        Whether to include print statements.
     Returns
     -------
     feature_selected : list
         list of top features from random forest
     selector.estimator_.feature_importances_ : list
         list of top ginis corresponding to to features
-
     """
-    splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest)
+    splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity)
+
     downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix,
-        classOfInterest = 'classification_group',
-        random_state = None, min_cells = 15, keep_small_categories = False)
+    random_state = randomState, min_cells = min_cells,
+        keep_small_categories = keep_small_categories, verbosity = verbosity,
+        classOfInterest = 'classification_group' )
+
+    if verbosity == True:
+        print(labelOfInterest)
+        print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
 
     feat_labels = downsampledMatrix.var_names
     X = downsampledMatrix.X
-    y = downsampledMatrix.obs['classification_group']
+    y = downsampledMatrix.obs['classification_group'] #'A' or 'B' labels from labelSplit
 
     clf = RandomForestClassifier(n_estimators = nEstimators, random_state = randomState,
                                  n_jobs = nJobs, oob_score = oobScore)
-    selector = RFECV(clf, step = Step, cv = Cv)
+
+    Cv = StratifiedKFold(Cv)
+    selector = RFECV(clf, step = Step, cv = Cv, scoring='f1_weighted', min_features_to_select=2)
 
     clf.fit(X, y)
     selector.fit(X, y)
     feature_selected = feat_labels[selector.support_]
     dataMatrix.obs['classification_group'] = 'B'
 
-    return feature_selected, selector.estimator_.feature_importances_
+    X_new = selector.fit_transform(X, y)
+    selector.fit(X_new, y)
+    score = selector.score(X_new, y)
+    feature_selected = feature_selected[selector.support_]
+
+    return feature_selected, selector.estimator_.feature_importances_,score,X_new,y
 
 
-# In[200]:
+# In[156]:
 
 
+# write the results
 def resultWrite (classOfInterest, results_df, labelOfInterest,
                 feature_selected, feature_importance):
 
@@ -210,15 +203,16 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
     return results_df
 
 
-# In[201]:
+# In[164]:
 
 
-def scRFE(adata, classOfInterest, nEstimators = 5000, randomState = 0,
-                  nJobs = -1, oobScore = True, Step = 0.2, Cv = 5):
+# main scRFE function
+def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
+        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5,
+          verbosity = True):
     """
     Builds and runs a random forest with one vs all classification for each label
     for one class of interest
-
     Parameters
     ----------
     dataMatrix : anndata object
@@ -232,6 +226,10 @@ def scRFE(adata, classOfInterest, nEstimators = 5000, randomState = 0,
         The number of trees in the forest
     randomState : int
         Controls random number being used
+    min_cells : int
+        Minimum number of cells in a given class to downsample.
+    keep_small_categories : bool
+        Whether to keep classes with small number of observations, or to remove.
     nJobs : int
         The number of jobs to run in parallel
     oobScore : bool
@@ -240,45 +238,114 @@ def scRFE(adata, classOfInterest, nEstimators = 5000, randomState = 0,
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-
+    verbosity : bool
+        Whether to include print statements.
     Returns
     -------
     results_df : pd.DataFrame
         Dataframe with results for each label in the class, formatted as
-        "label" for one column, then "label + gini" for the corresponding column
-
+        "label" for one column, then "label + gini" for the corresponding column.
+    score_df: dict
+        Score for each label in classOfInterest.
     """
+
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
-
-    print("Original dataset ", dataMatrix.shape)
-    dataMatrix = filterNormalize (dataMatrix, classOfInterest)
-    print("Filtered dataset ",dataMatrix.shape)
-    print(pd.DataFrame(dataMatrix.obs.groupby([classOfInterest])[classOfInterest].count()))
-
+    dataMatrix = filterNormalize (dataMatrix, classOfInterest, verbosity)
     results_df = pd.DataFrame()
-    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
-        print(labelOfInterest)
-        dataMatrix_labelOfInterest = dataMatrix.copy()
-        feature_selected, feature_importance = makeOneForest(dataMatrix_labelOfInterest,
-                                                             classOfInterest,
-                                    labelOfInterest = labelOfInterest)
 
-        results_df = resultWrite (classOfInterest, results_df,
-                            labelOfInterest = labelOfInterest,
-                    feature_selected = feature_selected,
-                    feature_importance = feature_importance)
+    score_df = {}
+    for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
+
+        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+
+            dataMatrix_labelOfInterest = dataMatrix.copy()
+
+            feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
+                classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
+                nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
+                    keep_small_categories = keep_small_categories,
+                       nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
+
+            results_df = resultWrite (classOfInterest, results_df,
+                                labelOfInterest = labelOfInterest,
+                        feature_selected = feature_selected,
+                        feature_importance = feature_importance)
+
+            score_df[labelOfInterest] = model_score
+        pass
+
+    return results_df,score_df
 
 
-    return results_df
+
+#!/usr/bin/env python
+# coding: utf-8
+
+# # scRFEimplot
+
+# In[92]:
 
 
-# In[ ]:
+# import dependencies
+import numpy as np
+import pandas as pd
+import scanpy as sc
+import random
+import logging as logg
+from sklearn.ensemble import RandomForestClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.feature_selection import SelectFromModel
+from sklearn.model_selection import StratifiedKFold
+from sklearn.feature_selection import RFECV
+from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
+import matplotlib.pyplot as plt
 
 
-# liverTFAge = scRFE (adata = adataLiver, classOfInterest = 'age',
-#                        nEstimators = 10, randomState = 0,
-#                   nJobs = -1, oobScore = True, Step = 0.2, Cv = 3)
+# In[65]:
+
+
+def scRFEimplot(X_new,y):
+    """
+    Plots permutation importance of each feature selected by scRFE.
+    Parameters
+    ----------
+    X_new : sparse matrix
+    Transformed array.
+    y : pandas series
+    Target labels.
+    Returns
+    -------
+    plt : module matplotlib.pyplot
+    Can be pickled, then saved as an image.
+    """
+    rf = RandomForestClassifier(random_state=0).fit(X_new, y)
+    result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
+        n_jobs=-1)
+    fig, ax = plt.subplots()
+    sorted_idx = result.importances_mean.argsort()
+    ax.boxplot(result.importances[sorted_idx].T*100,
+        vert=False, labels=range(X_new.shape[1]))
+    ax.set_title("Permutation Importance of each feature")
+    ax.set_ylabel("Features")
+    fig.tight_layout()
+    plt.savefig('plot.png', dpi=300, bbox_inches='tight') #trying to show
+
+    plt.show()
+    return plt
+
+
+# In[66]:
+
+
+# test3 = scRFEimplot(X_new = test1[3], y = test1[4])
+
+
+# In[48]:
+
+
+# type(test3)
 
 
 # In[ ]:
