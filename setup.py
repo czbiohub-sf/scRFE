@@ -7,6 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.feature_selection import SelectFromModel
 from sklearn.metrics import accuracy_score
+from sklearn.inspection import permutation_importance
 from sklearn.feature_selection import RFE
 from sklearn.feature_selection import RFECV
 import seaborn as sns
@@ -14,11 +15,12 @@ import matplotlib.pyplot as plt
 import scanpy.external as sce
 import logging as logg
 from setuptools import setup, find_packages
+from tqdm import tqdm
 
 setup(
   name = 'scRFE',         # How you named your package folder (MyLib)
   packages = ['scRFE'],   # Chose the same as "name"
-  version = '1.4.7',      # Start with a small number and increase it with every change you make
+  version = '1.4.8',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",
   long_description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",
