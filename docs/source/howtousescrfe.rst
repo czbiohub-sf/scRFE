@@ -84,7 +84,7 @@ Users should use python’s pickle module to save the figure created. Example co
 .. code:: bash
 
   from scRFE.scRFE import makeOneForest
-  from scRFE import scRFEimplot
+  from scRFE.scRFE import scRFEimplot
   3mForest = makeOneForest(dataMatrix=adataLiver, classOfInterest=’age’, labelOfInterest=’3m’, nEstimators=1000,  randomState=0,  min_cells=15, keep_small_categories=True,   nJobs=-1, oobScore=True, Step=0.2, Cv=5, verbosity=True)
   fig = scRFEimplot(X_new = 3mForest[3], y = 3mForest[4])
 
