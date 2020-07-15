@@ -5,9 +5,7 @@ requirements.txt
 setup.cfg
 setup.py
 dist/.DS_Store
-dist/scRFE-1.4.5.tar.gz
-dist/scRFE-1.4.6.tar.gz
-dist/scRFE-1.4.7.tar.gz
+dist/scRFE-1.5.0.tar.gz
 docs/.DS_Store
 docs/Makefile
 docs/make.bat
