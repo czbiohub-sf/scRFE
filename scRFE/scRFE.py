@@ -18,7 +18,7 @@ from sklearn.feature_selection import RFECV
 from sklearn.metrics import accuracy_score
 from sklearn.inspection import permutation_importance
 import matplotlib.pyplot as plt
-from tqdm import tqdm
+from tqdm import tqdm 
 
 
 # In[146]:
@@ -116,7 +116,7 @@ def downsampleToSmallestCategory(dataMatrix, random_state, min_cells,
 def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
                    randomState,  min_cells, keep_small_categories,
                    nJobs, oobScore, Step, Cv, verbosity):
-    #need to add verbose arg details
+    #need to add verbose arg details 
     """
     Builds and runs a random forest for one label in a class of interest
     Parameters
@@ -140,7 +140,7 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-    verbosity : bool
+    verbosity : bool 
         Whether to include print statements.
     Returns
     -------
@@ -148,14 +148,20 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         list of top features from random forest
     selector.estimator_.feature_importances_ : list
         list of top ginis corresponding to to features
+    score : numpy.float
+    Score of underlying estimator.
+    X_new : sparse matrix 
+    Transformed array of selected features.
+    y : pandas series
+    Target labels.
     """
     splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity)
 
-    downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix,
-    random_state = randomState, min_cells = min_cells,
+    downsampledMatrix = downsampleToSmallestCategory (dataMatrix = splitDataMatrix, 
+    random_state = randomState, min_cells = min_cells, 
         keep_small_categories = keep_small_categories, verbosity = verbosity,
         classOfInterest = 'classification_group' )
-
+    
     if verbosity == True:
         print(labelOfInterest)
         print(pd.DataFrame(downsampledMatrix.obs.groupby(['classification_group',classOfInterest])[classOfInterest].count()))
@@ -174,9 +180,9 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
     selector.fit(X, y)
     feature_selected = feat_labels[selector.support_]
     dataMatrix.obs['classification_group'] = 'B'
-
+    
     X_new = selector.fit_transform(X, y)
-    selector.fit(X_new, y)
+    selector.fit(X_new, y) 
     score = selector.score(X_new, y)
     feature_selected = feature_selected[selector.support_]
 
@@ -207,9 +213,9 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
 
 
 # main scRFE function
-def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
-        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5,
-          verbosity = True):
+def scRFE (adata, classOfInterest, nEstimators = 1000, randomState = 0, min_cells = 15,
+        keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5, 
+          verbosity = True):    
     """
     Builds and runs a random forest with one vs all classification for each label
     for one class of interest
@@ -238,7 +244,7 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         Corresponds to percentage of features to remove at each iteration
     Cv : int
         Determines the cross-validation splitting strategy
-    verbosity : bool
+    verbosity : bool 
         Whether to include print statements.
     Returns
     -------
@@ -248,22 +254,22 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     score_df: dict
         Score for each label in classOfInterest.
     """
-
+    
     dataMatrix = adata.copy()
     dataMatrix = columnToString (dataMatrix)
     dataMatrix = filterNormalize (dataMatrix, classOfInterest, verbosity)
     results_df = pd.DataFrame()
-
+    
     score_df = {}
     for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
 
         for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
-
+            
             dataMatrix_labelOfInterest = dataMatrix.copy()
 
-            feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
-                classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
-                nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
+            feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix, 
+                classOfInterest = classOfInterest, labelOfInterest = labelOfInterest, 
+                nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells, 
                     keep_small_categories = keep_small_categories,
                        nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
 
@@ -276,3 +282,4 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
         pass
 
     return results_df,score_df
+

@@ -148,6 +148,12 @@ def makeOneForest (dataMatrix, classOfInterest, labelOfInterest, nEstimators,
         list of top features from random forest
     selector.estimator_.feature_importances_ : list
         list of top ginis corresponding to to features
+    score : numpy.float
+    Score of underlying estimator.
+    X_new : sparse matrix 
+    Transformed array of selected features.
+    y : pandas series
+    Target labels.
     """
     splitDataMatrix = labelSplit (dataMatrix, classOfInterest, labelOfInterest, verbosity)
 
@@ -207,7 +213,7 @@ def resultWrite (classOfInterest, results_df, labelOfInterest,
 
 
 # main scRFE function
-def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cells = 15,
+def scRFE (adata, classOfInterest, nEstimators = 1000, randomState = 0, min_cells = 15,
         keep_small_categories = True, nJobs = -1, oobScore = True, Step = 0.2, Cv = 5, 
           verbosity = True):    
     """

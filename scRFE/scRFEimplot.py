@@ -30,14 +30,14 @@ def scRFEimplot(X_new,y):
     Plots permutation importance of each feature selected by scRFE.
     Parameters
     ----------
-    X_new : sparse matrix
-    Transformed array.
+    X_new : sparse matrix 
+    Transformed array of selected features.
     y : pandas series
     Target labels.
     Returns
     -------
     plt : module matplotlib.pyplot
-    Can be pickled, then saved as an image.
+    Can be pickled, then saved.
     """
     rf = RandomForestClassifier(random_state=0).fit(X_new, y)
     result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
@@ -49,7 +49,6 @@ def scRFEimplot(X_new,y):
     ax.set_title("Permutation Importance of each feature")
     ax.set_ylabel("Features")
     fig.tight_layout()
-    plt.savefig('plot.png', dpi=300, bbox_inches='tight') #trying to show
 
     plt.show()
     return plt
@@ -68,3 +67,7 @@ def scRFEimplot(X_new,y):
 
 
 # In[ ]:
+
+
+
+
