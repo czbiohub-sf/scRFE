@@ -1,11 +1,10 @@
 .DS_Store
+.gitignore
 LICENSE
 README.md
 requirements.txt
 setup.cfg
 setup.py
-dist/.DS_Store
-dist/scRFE-1.5.0.tar.gz
 docs/.DS_Store
 docs/Makefile
 docs/make.bat
@@ -72,6 +71,7 @@ scripts/.ipynb_checkpoints/scRFEjun24-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFEprogressBar-checkpoint.ipynb
 scripts/__pycache__/scRFE.cpython-36.pyc
 scripts/__pycache__/scRFE.cpython-37.pyc
+scripts/__pycache__/scRFEimplot.cpython-37.pyc
 scripts/practiceScripts/.DS_Store
 scripts/practiceScripts/KidneyFacsAge1000.csv
 scripts/practiceScripts/SortingResults.ipynb
