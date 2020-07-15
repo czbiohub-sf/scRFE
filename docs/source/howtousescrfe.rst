@@ -71,7 +71,7 @@ Default parameters are listed below, but users may manipulate them as they see f
         Corresponds to percentage of features to remove at each iteration.
     Cv : int, default = 5
         Determines the k-fold cross-validation splitting strategy.
-    verbosity : bool
+    verbosity : bool, default = True
         Whether to include print statements.
 
 3) **Plot permutation importance for each feature.**
