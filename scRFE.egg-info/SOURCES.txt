@@ -7,6 +7,7 @@ setup.py
 dist/.DS_Store
 dist/scRFE-1.4.5.tar.gz
 dist/scRFE-1.4.6.tar.gz
+dist/scRFE-1.4.7.tar.gz
 docs/.DS_Store
 docs/Makefile
 docs/make.bat
@@ -44,8 +45,8 @@ docs/source/howtousescrfe.rst
 docs/source/index.rst
 docs/source/installingscrfe.rst
 docs/source/introduction.rst
+scRFE/ __init__.py
 scRFE/.DS_Store
-scRFE/__init__.py
 scRFE/scRFE.py
 scRFE/scRFEimplot.py
 scRFE/utils.py
@@ -55,10 +56,13 @@ scRFE.egg-info/dependency_links.txt
 scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
 scripts/.DS_Store
+scripts/VennDiagramNestimators.ipynb
+scripts/giniPlots.ipynb
 scripts/scRFE.ipynb
 scripts/scRFE.py
 scripts/scRFEimplot.ipynb
 scripts/scRFEimplot.py
+scripts/.ipynb_checkpoints/giniPlots-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFE-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFE-split-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFE-split-code-checkpoint.ipynb
