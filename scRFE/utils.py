@@ -255,9 +255,9 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     results_df = pd.DataFrame()
 
     score_df = {}
-    for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
+    for i in tqdm(range(len(adata.obs[classOfInterest]))):
 
-        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
 
             dataMatrix_labelOfInterest = dataMatrix.copy()
 

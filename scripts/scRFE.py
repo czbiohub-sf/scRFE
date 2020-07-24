@@ -261,9 +261,9 @@ def scRFE (adata, classOfInterest, nEstimators = 1000, randomState = 0, min_cell
     results_df = pd.DataFrame()
 
     score_df = {}
-    for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
+    for i in tqdm(range(len(adata.obs[classOfInterest]))):
 
-        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
 
             dataMatrix_labelOfInterest = dataMatrix.copy()
 
@@ -282,32 +282,3 @@ def scRFE (adata, classOfInterest, nEstimators = 1000, randomState = 0, min_cell
         pass
 
     return results_df,score_df
-
-
-def scRFEimplot(X_new,y):
-    """
-    Plots permutation importance of each feature selected by scRFE.
-    Parameters
-    ----------
-    X_new : sparse matrix
-    Transformed array of selected features.
-    y : pandas series
-    Target labels.
-    Returns
-    -------
-    plt : module matplotlib.pyplot
-    Can be pickled, then saved.
-    """
-    rf = RandomForestClassifier(random_state=0).fit(X_new, y)
-    result = permutation_importance(rf, X_new.todense(), y, n_repeats=10, random_state=0,
-        n_jobs=-1)
-    fig, ax = plt.subplots()
-    sorted_idx = result.importances_mean.argsort()
-    ax.boxplot(result.importances[sorted_idx].T*100,
-        vert=False, labels=range(X_new.shape[1]))
-    ax.set_title("Permutation Importance of each feature")
-    ax.set_ylabel("Features")
-    fig.tight_layout()
-
-    plt.show()
-    return plt
