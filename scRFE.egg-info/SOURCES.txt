@@ -55,8 +55,8 @@ scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
 scripts/.DS_Store
 scripts/Untitled.ipynb
+scripts/Untitled1.ipynb
 scripts/giniPlots.ipynb
-scripts/scRFE-Duplicate-Jul24.ipynb
 scripts/scRFE.ipynb
 scripts/scRFE.py
 scripts/scRFEimplot.ipynb

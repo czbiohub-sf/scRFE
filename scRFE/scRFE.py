@@ -263,7 +263,7 @@ def scRFE (adata, classOfInterest, nEstimators = 1000, randomState = 0, min_cell
     score_df = {}
 
 
-    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
+    for labelOfInterest in tqdm(np.unique(dataMatrix.obs[classOfInterest])):
 
         dataMatrix_labelOfInterest = dataMatrix.copy()
 
