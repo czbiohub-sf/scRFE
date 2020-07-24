@@ -3,6 +3,7 @@
 LICENSE
 README.md
 requirements.txt
+schemaReadMe.png
 setup.cfg
 setup.py
 docs/.DS_Store
@@ -53,11 +54,14 @@ scRFE.egg-info/dependency_links.txt
 scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
 scripts/.DS_Store
+scripts/Untitled.ipynb
 scripts/giniPlots.ipynb
+scripts/scRFE-Duplicate-Jul24.ipynb
 scripts/scRFE.ipynb
 scripts/scRFE.py
 scripts/scRFEimplot.ipynb
 scripts/scRFEimplot.py
+scripts/tissueGini.ipynb
 scripts/.ipynb_checkpoints/giniPlots-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFE-checkpoint.ipynb
 scripts/.ipynb_checkpoints/scRFE-split-checkpoint.ipynb

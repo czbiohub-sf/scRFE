@@ -20,7 +20,7 @@ from tqdm import tqdm
 setup(
   name = 'scRFE',         # How you named your package folder (MyLib)
   packages = ['scRFE'],   # Chose the same as "name"
-  version = '1.5.2',      # Start with a small number and increase it with every change you make
+  version = '1.5.3',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",
   long_description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",

@@ -255,24 +255,22 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
     results_df = pd.DataFrame()
 
     score_df = {}
-    for i in tqdm(range(len(adata.obs[classOfInterest]))[0:3]):
 
-        for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
 
-            dataMatrix_labelOfInterest = dataMatrix.copy()
+        dataMatrix_labelOfInterest = dataMatrix.copy()
 
-            feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
-                classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
-                nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
-                    keep_small_categories = keep_small_categories,
-                       nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
+        feature_selected, feature_importance, model_score, X_new, y =  makeOneForest(dataMatrix = dataMatrix,
+            classOfInterest = classOfInterest, labelOfInterest = labelOfInterest,
+            nEstimators = nEstimators, randomState = randomState,  min_cells = min_cells,
+                keep_small_categories = keep_small_categories,
+                   nJobs = nJobs, oobScore = oobScore, Step= Step, Cv=Cv, verbosity=verbosity)
 
-            results_df = resultWrite (classOfInterest, results_df,
-                                labelOfInterest = labelOfInterest,
-                        feature_selected = feature_selected,
-                        feature_importance = feature_importance)
+        results_df = resultWrite (classOfInterest, results_df,
+                            labelOfInterest = labelOfInterest,
+                    feature_selected = feature_selected,
+                    feature_importance = feature_importance)
 
-            score_df[labelOfInterest] = model_score
-        pass
+        score_df[labelOfInterest] = model_score
 
     return results_df,score_df
