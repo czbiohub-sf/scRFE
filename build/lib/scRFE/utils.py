@@ -256,7 +256,8 @@ def scRFE (adata, classOfInterest, nEstimators = 5000, randomState = 0, min_cell
 
     score_df = {}
 
-    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest])[0:3]:
+
+    for labelOfInterest in np.unique(dataMatrix.obs[classOfInterest]):
 
         dataMatrix_labelOfInterest = dataMatrix.copy()
 
