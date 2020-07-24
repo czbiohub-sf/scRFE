@@ -53,7 +53,6 @@ scRFE.egg-info/dependency_links.txt
 scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
 scripts/.DS_Store
-scripts/VennDiagramNestimators.ipynb
 scripts/giniPlots.ipynb
 scripts/scRFE.ipynb
 scripts/scRFE.py
@@ -151,3 +150,7 @@ scripts/practiceScripts/.ipynb_checkpoints/scRFEv1.4.2-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/testingLocalVersionJun23!-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/testingLocalVersionJun23-checkpoint.ipynb
 scripts/practiceScripts/.ipynb_checkpoints/venn-diagram-checkpoint.ipynb
+scripts/visualization/VennDiagramNestimators.ipynb
+scripts/visualization/giniPlots.ipynb
+scripts/visualization/matrixPlotsJul16.ipynb
+scripts/visualization/vennDiagrams.ipynb
