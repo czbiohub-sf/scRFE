@@ -54,9 +54,8 @@ scRFE.egg-info/dependency_links.txt
 scRFE.egg-info/requires.txt
 scRFE.egg-info/top_level.txt
 scripts/.DS_Store
-scripts/Untitled.ipynb
-scripts/Untitled1.ipynb
 scripts/giniPlots.ipynb
+scripts/scRFE-jul24-pbar.ipynb
 scripts/scRFE.ipynb
 scripts/scRFE.py
 scripts/scRFEimplot.ipynb
@@ -92,6 +91,7 @@ scripts/practiceScripts/matrixplot.py
 scripts/practiceScripts/scRFE 9.30.21 PM.py
 scripts/practiceScripts/scRFE 9.56.52 PM.py
 scripts/practiceScripts/scRFE-Copy1.ipynb
+scripts/practiceScripts/scRFE-Duplicate-Jul24.ipynb
 scripts/practiceScripts/scRFE-anndatasubset.ipynb
 scripts/practiceScripts/scRFE-split-save.ipynb
 scripts/practiceScripts/scRFE-split-save.py
@@ -118,6 +118,7 @@ scripts/practiceScripts/scRFEprogressBar.ipynb
 scripts/practiceScripts/scRFEsourceV2.ipynb
 scripts/practiceScripts/scRFEsourceV3.ipynb
 scripts/practiceScripts/scRFEsourceV4.ipynb
+scripts/practiceScripts/scRFEtest.ipynb
 scripts/practiceScripts/scRFEv1.4.2.ipynb
 scripts/practiceScripts/scRFEv1.4.2.py
 scripts/practiceScripts/testingLocalVersionJun23!.ipynb

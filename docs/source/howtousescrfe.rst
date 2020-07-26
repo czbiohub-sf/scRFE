@@ -52,9 +52,9 @@ Example code is below:
 Default parameters are listed below, but users may manipulate them as they see fit.
 
     adata : anndata object
-        The data file of interest.
+        The input .h5ad file of interest.
     classOfInterest : str
-        The class you will split the data by in the set of dataMatrix.obs.
+        The class you will classify the data by in the set of adata.obs.
     nEstimators : int, default = 1,000
         The number of trees in the forest.
     randomState : int, default = 0
