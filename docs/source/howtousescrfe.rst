@@ -43,7 +43,7 @@ Example code is below:
 .. code:: bash
 
     from scRFE.scRFE import scRFE
-    scRFEdf = scRFE (adata = AnnDataLiver, classOfInterest = 'age')
+    liverAgescRFE = scRFE (adata = AnnDataLiver, classOfInterest = 'age')
 
 
 ..
