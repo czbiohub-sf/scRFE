@@ -23,7 +23,7 @@ setup(
   version = '1.5.6',      # Start with a small number and increase it with every change you make
   license='MIT',        # Chose a license from here: https://help.github.com/articles/licensing-a-repository
   description = "Single-cell identity definition using random forests and recursive feature elimination",
-  long_description = "Single-cell identity definition using one vs all random forest classification and recursive feature elimination",
+  long_description = "Single-cell identity definition using random forests and recursive feature elimination",
 
   author = 'Madeline Park',                   # Type in your name
   author_email = 'madeline.park@czbiohub.org',      # Type in your E-Mail
