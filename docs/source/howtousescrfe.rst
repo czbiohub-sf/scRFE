@@ -5,7 +5,7 @@ by ranking feature importance.
 Follow the steps below to run our transcription factor analysis listed in our scRFE preprint on bioRxiv.
 To run analysis without transcription factors, simply omit Step 2.
 
-Find a more detailed tutorial of how to use scRFE at github.com/czbiohub/scRFE/scripts/scRFEtutorial.ipynb
+Find a more detailed tutorial of how to use scRFE at https://github.com/czbiohub/scRFE/blob/master/scripts/scRFEtutorial.ipynb
 
 1) **Read in AnnData Object and Filter/Normalize**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
