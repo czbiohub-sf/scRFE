@@ -76,7 +76,7 @@ to split observations by (classOfInterest)
 .. code:: bash
 
     # call scRFE to split observations by cell type
-    resultsdf, score = scRFE(adata =  adataTF, classOfInterest = ‘cell_ontology_class’)
+    topFeaturesDF, score = scRFE(adata =  adataTF, classOfInterest = ‘cell_ontology_class’)
 
 
 ..
