@@ -67,7 +67,7 @@ Note that scRFE will automatically remove cells in the dataset if they don’t h
 
 
 
-3) **Read in Transcription Factor List and Subset With Adata**
+3) **Call scRFE**
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Call scRFE specifying the AnnData object (adata) and the metadata column of adata
