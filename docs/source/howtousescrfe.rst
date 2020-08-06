@@ -76,7 +76,7 @@ to split observations by (classOfInterest)
 .. code:: bash
 
     # call scRFE to split observations by cell type
-    scRFE(adata =  adataTF, classOfInterest = ‘cell_ontology_class’)
+    scRFEtf = scRFE(adata =  adataTF, classOfInterest = ‘cell_ontology_class’)
 
 
 ..
